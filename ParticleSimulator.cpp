@@ -23,7 +23,7 @@ using namespace std;
 // Coefficient of restitution for particle-particle and wall-particle collisions
 double const COEFFICIENT_RESTITUTION = 0.95;
 
-// The maximum number of time steps to simulate
+// The maximum time in seconds to simulate
 int const MAX_TIME = 20;
 
 // A limit to the number of collisions to simulate

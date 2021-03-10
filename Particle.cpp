@@ -26,7 +26,7 @@ class Particle{
         // Mass of particle
         double m = 1;
 
-        // Coordinates of particle
+        // Position of particle
         double x = 0;
 
         // Velocity of particle
