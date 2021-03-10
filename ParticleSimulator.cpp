@@ -20,11 +20,11 @@
 #include "Particle.cpp"
 using namespace std;
 
-// Coefficient of restitution
+// Coefficient of restitution for particle-particle and wall-particle collisions
 double const COEFFICIENT_RESTITUTION = 0.95;
 
 // The maximum number of time steps to simulate
-int const MAX_TIME = 2000;
+int const MAX_TIME = 20;
 
 // A limit to the number of collisions to simulate
 // Prevents infinite loops for when the velocitie differences too small so it appears that the next collision is immediately afterwards.
@@ -104,7 +104,7 @@ double find_time_to_next_collision(Particle particles[], int &collision_position
 
 void run_simulation(Particle particles[]){
     /**
-    * Calculates and records the positions of the particles at each point in time.
+    * Calculates and records the positions and kinetic energies of the particles over time.
     * @param particles An array of the Particle class.
     */
 
@@ -116,12 +116,12 @@ void run_simulation(Particle particles[]){
     // The particle that will collide next
     int collision_position;
 
-    // Output the initial positions of each particle to the terminal
-    // Format: "time particle1_x particle2_x" et cetera
-    cout << "# " << "Format: \"time particle1_x particle2_x\" et cetera\n\n";
+    // Output the initial positions and kinetic energies of each particle to the terminal
+    // Format: "time particle1_xposition particle1_kinetic_energy particle2_xposition particle2_kinetic_energy" et cetera
+    cout << "# " << "Format: \"time particle1_xposition particle1_kinetic_energy particle2_xposition particle2_kinetic_energy\" et cetera\n\n";
     cout << time << "\t";
     for (int i = 0; i < MAX_PARTICLES; i++){
-        cout << particles[i].get_x() << "\t";
+        cout << particles[i].get_x() << "\t" << particles[i].get_kinetic_engergy() << "\t";
     }
     cout << endl;
 
@@ -154,10 +154,10 @@ void run_simulation(Particle particles[]){
             time = MAX_TIME;
         }
 
-        // Output the positions to the terminal
+        // Output the positions and kinetic energies to the terminal
         cout << time << "\t";
         for (int j = 0; j < MAX_PARTICLES; j++){
-            cout << particles[j].get_x() << "\t";
+            cout << particles[j].get_x() << "\t" << particles[j].get_kinetic_engergy() << "\t";
         }
         cout << endl;
 

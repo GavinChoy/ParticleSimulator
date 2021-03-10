@@ -24,8 +24,8 @@ echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions."
 echo ""
 
-# Run simulation and record the positions of the particles in a log file
+# Run simulation and record the positions and kinetic energies of the particles in a log file
 ./ParticleSimulator > results.log
 
-# Plot the paths of the particles
+# Plot the paths and kinetic energies of the particles
 gnuplot gnuplotter.gnu

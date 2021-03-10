@@ -116,6 +116,14 @@ class Particle{
             vx = new_vx;
         }
 
+        double get_kinetic_engergy(){
+            /**
+            * @return Double of the kinetic energy of this particle.
+            */
+
+            return 0.5 * m * vx * vx;
+        }
+
         double time_to_collision(Particle &other){
             /**
             * Calculates the time until a collision with another particle.
