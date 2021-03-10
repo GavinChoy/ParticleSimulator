@@ -32,8 +32,10 @@ class Particle{
         // Velocity of particle
         double vx = 0;
 
+        // Radius of particle
         double radius = 0;
 
+        // Whether this particle is an immovable wall
         bool is_wall = false;
 
     public:
@@ -41,9 +43,11 @@ class Particle{
         Particle(double new_m, double new_x, double new_vx, double new_radius, bool new_is_wall){
             /**
             * Construct a Particle object.
-            * @param new_m The mass of the particle.
-            * @param new_x The initial x-coordinate of the particle.
-            * @param new_vx The initial velocity in the x-direction of the particle.
+            * @param new_m Double of the mass of the particle.
+            * @param new_x Double of the initial x-coordinate of the particle.
+            * @param new_vx Double of the initial velocity in the x-direction of the particle.
+            * @param new_radius Double of the initial x-coordinate of the particle.
+            * @param new_is_wall Boolean whether this particle is an immovable wall.
             */
 
             m = new_m;
@@ -79,7 +83,7 @@ class Particle{
 
         double get_radius(){
             /**
-            * @return
+            * @return Double The radius of this particle.
             */
 
             return radius;
@@ -87,7 +91,7 @@ class Particle{
 
         bool get_is_wall(){
             /**
-            * @return
+            * @return Boolean Whether this particle is an immovable wall.
             */
 
             return is_wall;
@@ -95,7 +99,7 @@ class Particle{
 
         void advance(double dt){
             /**
-            * Updates the position of this particle due to the resultant force acting.
+            * Updates the position of this particle with its current velocity.
             * @param dt The size of the time step.
             */
 
@@ -103,31 +107,57 @@ class Particle{
             x += vx * dt;
         }
 
-        void add_vx(double additional_vx){
-            vx += additional_vx;
+        void set_vx(double new_vx){
+            /**
+            * Updates the velocity of this particle.
+            * @param new_vx Double of the new velocity.
+            */
+
+            vx = new_vx;
         }
 
         double time_to_collision(Particle &other){
+            /**
+            * Calculates the time until a collision with another particle.
+            * Throws an exception if there will never be a collision.
+            * @param other Particle which is the other particle.
+            * @return Double The time until a collision with the other particle.
+            */
 
+            // The relative velocity (closing speed) between the two particles.
             double relative_velocity = vx - other.get_vx();
 
+            // If the particles are closing, calculate the time required
+            // Otherwise, the particles will never collide so throw an exception
             if (relative_velocity > 0){
-                double travel_time = ((other.get_x() - other.get_radius()) - (x + radius)) / relative_velocity;
-                return travel_time;
+                // Time required = distance between the particle surfaces divided by the closing speed
+                return ((other.get_x() - other.get_radius()) - (x + radius)) / relative_velocity;
             } else {
                 throw "Particles will not collide.";
             }
         }
 
-        void collide(Particle &other){
-            double relative_velocity = vx - other.get_vx();
+        void collide(Particle &other, double e){
+            /**
+            * Calculates and updates the velocities of the colliding particles.
+            * @param other Particle which is the other particle.
+            * @param e Double of the coefficient of restitution.
+            */
+
+            // If this particle is an unmovable wall
+            // Else if the other particle is an unmovable wall
+            // Otherwise, the two particles are movable
             if (is_wall){
-                other.add_vx(2 * relative_velocity);
+                other.set_vx(e * (-other.get_vx()));
             } else if (other.get_is_wall()){
-                vx -= 2 * relative_velocity;
+                vx *= -e;
             } else {
-                vx -= 2 * relative_velocity * (1 / m) / ((1 / m) + (1 / other.get_m()));
-                other.add_vx(2 * relative_velocity * (1 / other.get_m()) / ((1 / m) + (1 / other.get_m())));
+                // Initial velocities
+                double ux = vx;
+                double other_ux = other.get_vx();
+
+                vx = ((m * ux) + (other.get_m() * (other_ux + (e * (other_ux - ux))))) / (m + other.get_m());
+                other.set_vx(vx + (e * (ux - other_ux)));
             }
         }
 };

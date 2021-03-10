@@ -15,5 +15,5 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 set key outside
-plot 'results.log' u 2:1 w line, 'results.log' u 3:1 w line, 'results.log' u 4:1 w line, 'results.log' u 5:1 w line
+plot 'results.log' u 3:1 w line, 'results.log' u 4:1 w line, 'results.log' u 5:1 w line,  'results.log' u 6:1 w line,  'results.log' u 7:1 w line,  'results.log' u 8:1 w line,  'results.log' u 9:1 w line,  'results.log' u 10:1 w line,  'results.log' u 11:1 w line,  'results.log' u 12:1 w line
 pause -1 "Press enter to exit\n"
