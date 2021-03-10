@@ -116,7 +116,7 @@ class Particle{
             vx = new_vx;
         }
 
-        double get_kinetic_engergy(){
+        double get_kinetic_energy(){
             /**
             * @return Double of the kinetic energy of this particle.
             */

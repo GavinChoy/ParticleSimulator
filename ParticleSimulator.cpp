@@ -27,7 +27,7 @@ double const COEFFICIENT_RESTITUTION = 0.95;
 int const MAX_TIME = 20;
 
 // A limit to the number of collisions to simulate
-// Prevents infinite loops for when the velocitie differences too small so it appears that the next collision is immediately afterwards.
+// Prevents infinite loops for when the velocity differences too small so it appears that the next collision is immediately afterwards.
 int const MAX_COLLISIONS = 10000;
 
 // The number of particles to simulate
@@ -121,7 +121,7 @@ void run_simulation(Particle particles[]){
     cout << "# " << "Format: \"time particle1_xposition particle1_kinetic_energy particle2_xposition particle2_kinetic_energy\" et cetera\n\n";
     cout << time << "\t";
     for (int i = 0; i < MAX_PARTICLES; i++){
-        cout << particles[i].get_x() << "\t" << particles[i].get_kinetic_engergy() << "\t";
+        cout << particles[i].get_x() << "\t" << particles[i].get_kinetic_energy() << "\t";
     }
     cout << endl;
 
@@ -157,7 +157,7 @@ void run_simulation(Particle particles[]){
         // Output the positions and kinetic energies to the terminal
         cout << time << "\t";
         for (int j = 0; j < MAX_PARTICLES; j++){
-            cout << particles[j].get_x() << "\t" << particles[j].get_kinetic_engergy() << "\t";
+            cout << particles[j].get_x() << "\t" << particles[j].get_kinetic_energy() << "\t";
         }
         cout << endl;
 
